@@ -222,6 +222,7 @@ class NcmClientv2(BaseNcmClient):
                         url = get_url
                         while url and (len(results) < limit):
                             ncm = self.session.get(url, params=params)
+                            ncm.raise_for_status()
                             if not (200 <= ncm.status_code < 300):
                                 break
                             self._return_handler(ncm.status_code,
@@ -235,6 +236,7 @@ class NcmClientv2(BaseNcmClient):
             url = get_url
             while url and (len(results) < limit):
                 ncm = self.session.get(url, params=params)
+                ncm.raise_for_status()
                 if not (200 <= ncm.status_code < 300):
                     break
                 self._return_handler(ncm.status_code, ncm.json()['data'],
@@ -340,6 +342,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.post(post_url, data=json.dumps(post_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -369,6 +372,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.put(put_url, data=json.dumps(put_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -497,6 +501,7 @@ class NcmClientv2(BaseNcmClient):
                                                            config_man_id)
 
         ncm = self.session.put(put_url, json=config_man_json)
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -514,6 +519,7 @@ class NcmClientv2(BaseNcmClient):
             '{0}/configuration_managers/?router.id={1}&fields=id'.format(
                 self.base_url,
                 str(router_id)))  # Get Configuration Managers ID for router
+        ncm.raise_for_status()
         response = json.loads(response.content.decode(
             "utf-8"))  # Decode the response and make it a dictionary
         config_man_id = response['data'][0][
@@ -554,6 +560,7 @@ class NcmClientv2(BaseNcmClient):
             '{0}/configuration_managers/{1}/?fields=configuration'.format(
                 self.base_url, str(configman_id)),
             json=payload)  # Patch indie config with new values
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.text, call_type)
         return result
 
@@ -590,6 +597,7 @@ class NcmClientv2(BaseNcmClient):
         ncm = self.session.put(
             '{0}/groups/{1}/'.format(self.base_url, str(group_id)),
             data=json.dumps(payload))  # put group config with new values
+        ncm.raise_for_status()
         result = self.__return_handler(ncm.status_code, ncm.text, call_type)
         return result
 
@@ -640,6 +648,7 @@ class NcmClientv2(BaseNcmClient):
             '{0}/configuration_managers/{1}/'.format(self.base_url,
                                                      str(configman_id)),
             json=payload)
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.text, call_type)
         return result
 
@@ -836,6 +845,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.post(post_url, data=json.dumps(post_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -871,6 +881,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.put(put_url, data=json.dumps(put_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -1005,6 +1016,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.post(post_url, data=json.dumps(post_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -1232,6 +1244,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.post(post_url, data=json.dumps(post_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.text, call_type)
         return result
 
@@ -1249,6 +1262,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.post(post_url, data=json.dumps(post_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.text, call_type)
         return result
 
@@ -1542,6 +1556,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.put(put_url, data=json.dumps(put_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -1573,6 +1588,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.put(put_url, data=json.dumps(put_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -1597,6 +1613,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.put(put_url, data=json.dumps(put_data))
+        ncm.raise_for_status()
         if ncm.status_code == 201 or ncm.status_code == 202:
             self.log('info', 'Router Modified Successfully')
             return None
@@ -1621,6 +1638,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.put(put_url, data=json.dumps(put_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -1688,6 +1706,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.post(post_url, data=json.dumps(post_data))
+        ncm.raise_for_status()
         if ncm.status_code == 201:
             return ncm.json()
         else:
@@ -1744,7 +1763,10 @@ class NcmClientv2(BaseNcmClient):
         call_type = 'Speed Test'
         get_url = '{0}/speed_test/{1}/'.format(self.base_url, speed_test_id)
 
-        return self.session.get(get_url).json()
+        response = self.session.get(get_url)
+        response.raise_for_status()
+
+        return response.json()
 
 
     def set_lan_ip_address(self, router_id, lan_ip, netmask=None,
@@ -1764,6 +1786,7 @@ class NcmClientv2(BaseNcmClient):
             '{0}/configuration_managers/?router.id={1}&fields=id'.format(
                 self.base_url,
                 str(router_id)))  # Get Configuration Managers ID
+        response.raise_for_status()
         response = json.loads(response.content.decode(
             "utf-8"))  # Decode the response and make it a dictionary
         config_man_id = response['data'][0][
@@ -1821,6 +1844,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.put(put_url, data=json.dumps(put_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -1840,6 +1864,7 @@ class NcmClientv2(BaseNcmClient):
         }
 
         ncm = self.session.put(put_url, data=json.dumps(put_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -1856,6 +1881,7 @@ class NcmClientv2(BaseNcmClient):
             '{0}/configuration_managers/?router.id={1}&fields=id'.format(
                 self.base_url,
                 str(router_id)))  # Get Configuration Managers ID
+        response.raise_for_status()
         response = json.loads(response.content.decode(
             "utf-8"))  # Decode the response and make it a dictionary
         config_man_id = response['data'][0][
@@ -1896,6 +1922,7 @@ class NcmClientv2(BaseNcmClient):
             '{0}/configuration_managers/?router.id={1}&fields=id'.format(
                 self.base_url,
                 str(router_id)))  # Get Configuration Managers ID
+        response.raise_for_status()
         response = json.loads(response.content.decode(
             "utf-8"))  # Decode the response and make it a dictionary
         config_man_id = response['data'][0][
@@ -2115,6 +2142,7 @@ class NcmClientv2(BaseNcmClient):
                 put_data[k] = v
 
         ncm = self.session.put(put_url, data=json.dumps(put_data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -2367,6 +2395,7 @@ class NcmClientv3(BaseNcmClient):
         }
 
         ncm = self.session.post(post_url, data=json.dumps(data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -2400,6 +2429,7 @@ class NcmClientv3(BaseNcmClient):
         user = {"data": user}
 
         ncm = self.session.put(put_url, data=json.dumps(user))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -2509,6 +2539,7 @@ class NcmClientv3(BaseNcmClient):
             payload["atomic:operations"].append(data)
 
         ncm = self.session.post(post_url, json=payload)
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -2643,6 +2674,7 @@ class NcmClientv3(BaseNcmClient):
         data = {"data": net}
 
         ncm = self.session.put(put_url, data=json.dumps(data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -2693,6 +2725,7 @@ class NcmClientv3(BaseNcmClient):
             data['data']['relationships'] = relationships
 
         ncm = self.session.post(post_url, data=json.dumps(data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -2936,6 +2969,7 @@ class NcmClientv3(BaseNcmClient):
         radio = {"data": radio}
 
         ncm = self.session.put(put_url, data=json.dumps(radio))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -3053,6 +3087,7 @@ class NcmClientv3(BaseNcmClient):
         group = {"data": group}
 
         ncm = self.session.put(put_url, data=json.dumps(group))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         return result
 
@@ -3521,12 +3556,13 @@ class NcmClientv3(BaseNcmClient):
         }
 
         ncm = self.session.post(post_url, data=json.dumps(data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         if ncm.status_code == 201:
             return ncm.json()['data']
         else:
             return result
-        
+
     def update_exchange_site(self, site_id: str = None, name: str = None, **kwargs) -> dict:
         """
         Updates an exchange site.
@@ -3628,6 +3664,7 @@ class NcmClientv3(BaseNcmClient):
         }
 
         ncm = self.session.put(put_url, data=json.dumps(data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         if ncm.status_code == 200:
             return ncm.json()['data']
@@ -3914,6 +3951,7 @@ class NcmClientv3(BaseNcmClient):
         }
 
         ncm = self.session.post(post_url, data=json.dumps(data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         if ncm.status_code == 201:
             return ncm.json()['data']
@@ -4029,6 +4067,7 @@ class NcmClientv3(BaseNcmClient):
         }
 
         ncm = self.session.put(put_url, data=json.dumps(data))
+        ncm.raise_for_status()
         result = self._return_handler(ncm.status_code, ncm.json(), call_type)
         if ncm.status_code == 200:
             return ncm.json()['data']
