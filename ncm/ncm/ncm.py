@@ -1159,7 +1159,8 @@ class NcmClientv2(BaseNcmClient):
                           'created_at_timeuuid__gte',
                           'created_at_timeuuid__lt',
                           'created_at_timeuuid__lte',
-                          'order_by', 'limit', 'offset']
+                          'order_by', 'limit', 'offset',
+                          'fields']
         params = self.__parse_kwargs(kwargs, allowed_params)
 
         return self.__get_json(get_url, call_type, params=params)
